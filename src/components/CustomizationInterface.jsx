@@ -1,65 +1,144 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import { CustomizationContext } from "../context/CustomizationContex.jsx";
-import { Button, Box, Heading, Text, Stack, Flex, IconButton } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  Text,
+  Stack,
+  IconButton,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { ChevronUpIcon } from "@chakra-ui/icons";
 import { motion, AnimatePresence } from "framer-motion";
 import CustomColorPicker from "./CustomColorPicker.jsx";
 import SizeCustomizer from "./SizeCustomizer.jsx";
 
-export default function CustomizationInterface() {
+export default function CustomizationPanel() {
   const { isOpenModal, customization, setIsOpenModal } = useContext(CustomizationContext);
 
-  const heightSideBar = window.innerHeight > 909 ? "auto" : "80vh";
-  const overflowYSideBar = window.innerHeight > 909 ? "hidden" : "scroll";
+  // Dynamically adjust the sidebar based on the viewport height
+  const sidebarHeight = window.innerHeight > 909 ? "auto" : "75vh";
+  const overflowSidebar = window.innerHeight > 909 ? "hidden" : "auto";
+
+  const bgColor = useColorModeValue("blueAlpha.900", "gray.800");
+  const headerBg = useColorModeValue(
+    "linear-gradient(to right, #4CAF50, #81C784)", 
+    "linear-gradient(to right, #2C3E50, #4CA1AF)"  
+  );
+  
+  const headerTextColor = useColorModeValue("white", "gray.100");
+  const panelShadow = useColorModeValue("0 4px 12px rgba(0, 0, 0, 0.1)", "0 4px 12px rgba(0, 0, 0, 0.3)");
 
   return (
-    <Box style={{ position: "absolute", top: 0, right: "1%" }} p={3} ml={3} width="310px">
-      <Box className="headingGlass" mb={4} p={4}>
-        <Flex justify="space-between">
-          <Text p={2}>Shoe Configurator</Text>
-          {isOpenModal ? (
+    <Box
+      position="absolute"
+      top={0}
+      right="2%"
+      p={4}
+      width="350px"
+      zIndex={1000}
+      bg={bgColor}
+      boxShadow="none" 
+      borderRadius="lg"
+    >
+      {/* Header Section */}
+      <Box
+        mb={6}
+        p={6}
+        borderRadius="lg"
+        bg={headerBg}
+        color={headerTextColor}
+        boxShadow="md"
+      >
+        <Flex justify="space-between" align="center">
+          <Text
+            fontSize="lg"
+            fontWeight="bold"
+            letterSpacing="wide"
+            fontFamily="'Poppins', sans-serif"
+          >
+            Flux - 3D Sneaker Store
+          </Text>
+          {isOpenModal && (
             <IconButton
-              variant="outline"
+              variant="ghost"
               colorScheme="whiteAlpha"
-              aria-label="Collapse menu"
+              aria-label="Toggle Menu"
               onClick={() => setIsOpenModal(!isOpenModal)}
               icon={<ChevronUpIcon />}
             />
-          ) : null}
+          )}
         </Flex>
-        <Heading as="h1" size="lg" p={2} style={{ fontFamily: "Noto Sans Mono" }}>
-          {customization.layerName ? customization.layerName : "Click on a layer to start editing!"}
+        <Heading
+          as="h2"
+          size="md"
+          mt={3}
+          fontFamily="'Poppins', sans-serif"
+          fontWeight="light"
+          lineHeight="short"
+        >
+          {customization.layerName
+            ? customization.layerName
+            : "Klik op de schoen en laat je creativiteit de vrije loop!"}
         </Heading>
       </Box>
+
+      {/* Content Section */}
       <AnimatePresence>
-        {isOpenModal ? (
+        {isOpenModal && (
           <motion.div
-            initial="collapsed"
-            animate="open"
-            exit="collapsed"
-            variants={{
-              open: { opacity: 1, height: heightSideBar, overflowY: overflowYSideBar, overflowX: "hidden" },
-              collapsed: { opacity: 0, height: 0 },
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: sidebarHeight }}
+            exit={{ opacity: 0, height: 0 }}
+            style={{
+              overflowY: overflowSidebar,
+              overflowX: "hidden",
             }}
-            transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
           >
-            <Stack spacing="4">
-              <Stack className="glass" p={8} width="290px" spacing="12px">
-                <Heading as="h3" size="sm" py={2}>
-                  Layer color
+            <Stack spacing={6}>
+              {/* Color Customization */}
+              <Box
+                p={6}
+                bg={useColorModeValue("gray.50", "gray.700")}
+                borderRadius="lg"
+                boxShadow="sm"
+                _hover={{
+                  boxShadow: "lg",
+                  transition: "all 0.2s",
+                }}
+              >
+                <Heading
+                  as="h3"
+                  size="sm"
+                  mb={4}
+                  color="blackAlpha.900" 
+                  fontFamily="'Poppins', sans-serif"
+                  fontWeight="medium"
+                >
+                  Laagkleur
                 </Heading>
                 <CustomColorPicker />
-              </Stack>
+              </Box>
 
-              <Stack className="glass" p={8} width="290px" spacing="12px">
-                <Heading as="h3" size="sm" py={2}>
-                  Layer size
-                </Heading>
+              {/* Size Customization */}
+              <Box
+                p={6}
+            
+                borderRadius="lg"
+                boxShadow="sm"
+                _hover={{
+                  boxShadow: "lg",
+                  transition: "all 0.2s",
+                }}
+              >
+            
                 <SizeCustomizer />
-              </Stack>
+              </Box>
             </Stack>
           </motion.div>
-        ) : null}
+        )}
       </AnimatePresence>
     </Box>
   );

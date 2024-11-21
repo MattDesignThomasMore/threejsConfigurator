@@ -81,61 +81,7 @@ export default function SizeCustomizer() {
   };
   return (
     <>
-      <Text>Width</Text>
-      <Slider
-        aria-label="slider-height"
-        value={customization.layerSize[customization.layerName].z}
-        min={0}
-        max={3}
-        step={0.2}
-        onChange={(v) => handleSliderChange(v, "z")}
-      >
-        <SliderTrack>
-          <SliderFilledTrack />
-        </SliderTrack>
-        <SliderThumb />
-      </Slider>
-
-      <Text>Height</Text>
-      <Slider
-        aria-label="slider-height"
-        min={0}
-        max={3}
-        step={0.2}
-        value={customization.layerSize[customization.layerName].y}
-        onChange={(v) => handleSliderChange(v, "y")}
-      >
-        <SliderTrack>
-          <SliderFilledTrack />
-        </SliderTrack>
-        <SliderThumb />
-      </Slider>
-
-      <Text>Depth</Text>
-      <Slider
-        aria-label="slider-width"
-        min={0}
-        max={3}
-        step={0.2}
-        value={customization.layerSize[customization.layerName].x}
-        onChange={(v) => handleSliderChange(v, "x")}
-      >
-        <SliderTrack>
-          <SliderFilledTrack />
-        </SliderTrack>
-        <SliderThumb />
-      </Slider>
-      <Button
-        variant="outline"
-        colorScheme="whiteAlpha"
-        mt={10}
-        onClick={() => setDefaultValuesForLayer(customization.layerName)}
-      >
-        Default values for layer
-      </Button>
-      <Button variant="outline" colorScheme="whiteAlpha" onClick={setDefaultValuesForModel}>
-        Default values for model
-      </Button>
+     
     </>
   );
 }
