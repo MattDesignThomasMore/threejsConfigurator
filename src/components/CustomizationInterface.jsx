@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useContext } from "react";
 import { CustomizationContext } from "../context/CustomizationContex.jsx";
 import {
@@ -8,6 +9,7 @@ import {
   Stack,
   IconButton,
   useColorModeValue,
+  Button,
 } from "@chakra-ui/react";
 import { ChevronUpIcon } from "@chakra-ui/icons";
 import { motion, AnimatePresence } from "framer-motion";
@@ -16,6 +18,7 @@ import SizeCustomizer from "./SizeCustomizer.jsx";
 
 export default function CustomizationPanel() {
   const { isOpenModal, customization, setIsOpenModal } = useContext(CustomizationContext);
+  const navigate = useNavigate(); // Voeg deze regel toe
 
   // Dynamically adjust the sidebar based on the viewport height
   const sidebarHeight = window.innerHeight > 909 ? "auto" : "75vh";
@@ -29,6 +32,11 @@ export default function CustomizationPanel() {
   
   const headerTextColor = useColorModeValue("white", "gray.100");
   const panelShadow = useColorModeValue("0 4px 12px rgba(0, 0, 0, 0.1)", "0 4px 12px rgba(0, 0, 0, 0.3)");
+
+  const handleGoToOrder = () => {
+    // Gebruik navigate om naar de orderpagina te gaan
+    navigate('/order');
+  };
 
   return (
     <Box
@@ -125,7 +133,6 @@ export default function CustomizationPanel() {
               {/* Size Customization */}
               <Box
                 p={6}
-            
                 borderRadius="lg"
                 boxShadow="sm"
                 _hover={{
@@ -133,13 +140,24 @@ export default function CustomizationPanel() {
                   transition: "all 0.2s",
                 }}
               >
-            
                 <SizeCustomizer />
               </Box>
             </Stack>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Go to Order Button */}
+      <Button
+        onClick={handleGoToOrder}
+        colorScheme="teal"
+        width="100%"
+        mt={-2}
+        borderRadius="md"
+        size="lg"
+      >
+        Ga door naar bestelling
+      </Button>
     </Box>
   );
 }
