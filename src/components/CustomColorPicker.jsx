@@ -21,8 +21,8 @@ export default function CustomColorPicker({ setNameToDrop }) {
   const { customization, setCustomization } = useContext(CustomizationContext);
   const [colorOnCircle, setColorOnCircle] = useState("#1A0E3E");
   const [hexColorPicker, setHexColorPicker] = useState(customization.layerColor[customization.layerName]);
-  const [name, setName] = useState(""); // State voor naam
-  const [draggedName, setDraggedName] = useState(null); // State voor drag-and-drop
+  const [name, setName] = useState(""); 
+  const [draggedName, setDraggedName] = useState(null); 
 
   useEffect(() => {
     setHexColorPicker(customization.layerColor[customization.layerName]);
@@ -53,7 +53,7 @@ export default function CustomColorPicker({ setNameToDrop }) {
 
   const handleDragStart = (e) => {
     setDraggedName(name);
-    setNameToDrop(name); // Stuur de naam naar de parent (Scene) component
+    setNameToDrop(name); 
   };
 
   return (
@@ -69,59 +69,8 @@ export default function CustomColorPicker({ setNameToDrop }) {
         color={hexColorPicker}
         onChange={(color) => handleColorPicker(color)}
       />
-
-      {/* Naam invoeren */}
-      <div style={{ marginTop: "20px" }}>
-        <label htmlFor style={{ color: "black", fontWeight: "bold", fontSize: "18px" }} for="nameInput">Jouw initialen</label>
-        <input
-  id="nameInput"
-  type="text"
-  value={name}
-  onChange={(e) => setName(e.target.value)}
-  style={{
-    display: "block",
-    marginTop: "10px",
-    padding: "5px",
-    fontSize: "16px",
-    color: "black", // Dit maakt de tekst binnen de input zwart
-  }}
-/>
-
-      </div>
-
-      {/* Naam weergeven en slepen */}
-      <div
-        style={{
-          marginTop: "20px",
-          padding: "10px",
-          backgroundColor: "#f0f0f0",
-          border: "1px solid #ccc",
-        }}
-        draggable
-        onDragStart={handleDragStart}
-      >
-        <p style={{ margin: 0, color: "black" }}> {name || "Geen initialen toegevoegd"}</p>
-      </div>
-
-      {/* Dropzone */}
-      <div
-        style={{
-          marginTop: "20px",
-          height: "100px",
-          border: "2px dashed #ccc",
-          textAlign: "center",
-          lineHeight: "100px",
-          color: "black",
-        }}
-        onDrop={(e) => {
-          e.preventDefault();
-          alert(`Initialen "${draggedName}" gedropt in de omgeving!`);
-
-        }}
-        onDragOver={(e) => e.preventDefault()}
-      >
-        Sleep je initialen hier!
-      </div>
     </>
+      
+
   );
 }

@@ -68,22 +68,20 @@ export default function SizeCustomizer() {
 
   return (
     <>
-      {/* Button to open the modal */}
       <Button onClick={onOpen} color="black" style={{ marginLeft: "-20px" }}>
-        Open maat configurator
+      Open size configurator
       </Button>
 
-      {/* Modal for the Size Customizer */}
       <Modal isOpen={isOpen} onClose={onClose} size="sm">
         <ModalOverlay />
         <ModalContent marginTop="30px">
-          <ModalHeader>Grootte van de schoenlagen</ModalHeader>
+          <ModalHeader>Shoe layer size</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <VStack spacing={6} align="stretch">
-              {/* Slider for Breedte */}
+      
               <HStack spacing={6} align="center" justify="space-between">
-                <Text color="black">Breedte</Text>
+                <Text color="black">Width:</Text>
                 <Slider
                   aria-label="slider-width"
                   value={customization.layerSize[customization.layerName].x}
@@ -100,9 +98,9 @@ export default function SizeCustomizer() {
                 </Slider>
               </HStack>
 
-              {/* Slider for Hoogte */}
+          
               <HStack spacing={6} align="center" justify="space-between">
-                <Text color="black">Hoogte</Text>
+                <Text color="black">Height:</Text>
                 <Slider
                   aria-label="slider-height"
                   value={customization.layerSize[customization.layerName].y}
@@ -119,10 +117,10 @@ export default function SizeCustomizer() {
                 </Slider>
               </HStack>
 
-              {/* Slider for Diepte */}
+     
               <HStack spacing={6} align="center" justify="space-between">
                 <Text color="black" marginBottom={"10px"}>
-                  Diepte
+                  Dept:
                 </Text>
                 <Slider
                   aria-label="slider-depth"

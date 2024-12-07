@@ -1,4 +1,4 @@
-import { Canvas } from "@react-three/fiber";
+ import { Canvas } from "@react-three/fiber";
 import { Environment, OrbitControls} from "@react-three/drei";
 import { Suspense } from "react";
 import ModelShoe from "./models/ModelShoe.jsx";

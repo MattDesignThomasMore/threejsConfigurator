@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom';
-import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { useContext, useRef } from "react";
 import { CustomizationContext } from "../context/CustomizationContex.jsx";
 import {
   Box,
@@ -18,25 +18,72 @@ import SizeCustomizer from "./SizeCustomizer.jsx";
 
 export default function CustomizationPanel() {
   const { isOpenModal, customization, setIsOpenModal } = useContext(CustomizationContext);
-  const navigate = useNavigate(); // Voeg deze regel toe
+  const navigate = useNavigate();
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
 
-  // Dynamically adjust the sidebar based on the viewport height
+
   const sidebarHeight = window.innerHeight > 909 ? "auto" : "75vh";
   const overflowSidebar = window.innerHeight > 909 ? "hidden" : "auto";
 
   const bgColor = useColorModeValue("blueAlpha.900", "gray.800");
   const headerBg = useColorModeValue(
-    "linear-gradient(to right, #4CAF50, #81C784)", 
-    "linear-gradient(to right, #2C3E50, #4CA1AF)"  
+    "linear-gradient(to right, #4CAF50, #81C784)",
+    "linear-gradient(to right, #2C3E50, #4CA1AF)"
   );
-  
+
   const headerTextColor = useColorModeValue("white", "gray.100");
-  const panelShadow = useColorModeValue("0 4px 12px rgba(0, 0, 0, 0.1)", "0 4px 12px rgba(0, 0, 0, 0.3)");
 
   const handleGoToOrder = () => {
-    // Gebruik navigate om naar de orderpagina te gaan
-    navigate('/order');
+    navigate("/order");
   };
+
+  const startCamera = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      videoRef.current.srcObject = stream;
+    } catch (err) {
+      console.error("Kan de camera niet openen:", err);
+    }
+  };
+
+  const takeSnapshot = async () => {
+    try {
+   
+      const stream = await navigator.mediaDevices.getDisplayMedia({
+        video: { mediaSource: "screen" },
+      });
+  
+      const video = document.createElement("video");
+      video.srcObject = stream;
+  
+      await new Promise((resolve) => (video.onloadedmetadata = resolve));
+      video.play();
+  
+     
+      const canvas = canvasRef.current;
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+  
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  
+      const image = canvas.toDataURL("image/png");
+      const link = document.createElement("a");
+      link.href = image;
+      link.download = "screenshot.png";
+      link.click();
+  
+    
+      const tracks = stream.getTracks();
+      tracks.forEach((track) => track.stop());
+    } catch (error) {
+      console.error("Fout bij het maken van een screenshot:", error);
+    }
+  };
+  
+  
+
 
   return (
     <Box
@@ -47,10 +94,10 @@ export default function CustomizationPanel() {
       width="350px"
       zIndex={1000}
       bg={bgColor}
-      boxShadow="none" 
+      boxShadow="none"
       borderRadius="lg"
     >
-      {/* Header Section */}
+    
       <Box
         mb={6}
         p={6}
@@ -66,7 +113,7 @@ export default function CustomizationPanel() {
             letterSpacing="wide"
             fontFamily="'Poppins', sans-serif"
           >
-            Flux - 3D Sneaker Store
+            SWEAR - 3D Sneaker Store
           </Text>
           {isOpenModal && (
             <IconButton
@@ -88,11 +135,10 @@ export default function CustomizationPanel() {
         >
           {customization.layerName
             ? customization.layerName
-            : "Klik op de schoen en laat je creativiteit de vrije loop!"}
+            : "Click on the shoe and let your creativity run wild!"}
         </Heading>
       </Box>
-
-      {/* Content Section */}
+  
       <AnimatePresence>
         {isOpenModal && (
           <motion.div
@@ -106,7 +152,7 @@ export default function CustomizationPanel() {
             transition={{ duration: 0.4, ease: "easeInOut" }}
           >
             <Stack spacing={6}>
-              {/* Color Customization */}
+        
               <Box
                 p={6}
                 bg={useColorModeValue("gray.50", "gray.700")}
@@ -121,16 +167,16 @@ export default function CustomizationPanel() {
                   as="h3"
                   size="sm"
                   mb={4}
-                  color="blackAlpha.900" 
+                  color="blackAlpha.900"
                   fontFamily="'Poppins', sans-serif"
                   fontWeight="medium"
                 >
-                  Laagkleur
+                Layer color
                 </Heading>
                 <CustomColorPicker />
               </Box>
-
-              {/* Size Customization */}
+  
+             
               <Box
                 p={6}
                 borderRadius="lg"
@@ -146,18 +192,35 @@ export default function CustomizationPanel() {
           </motion.div>
         )}
       </AnimatePresence>
+  
 
-      {/* Go to Order Button */}
+      <Button
+        onClick={takeSnapshot}
+        colorScheme="white" 
+  bg="white"         
+  color="black"      
+  width="100%"
+  mt={8}
+  borderRadius="md"
+  size="lg"
+>
+       Take a snapshot
+      </Button>
+      
+     
       <Button
         onClick={handleGoToOrder}
-        colorScheme="teal"
+        colorScheme="#5acd75;"
         width="100%"
-        mt={-2}
+        mt={8}
         borderRadius="md"
         size="lg"
       >
-        Ga door naar bestelling
+Checkout
       </Button>
+      
+      <video ref={videoRef} autoPlay style={{ display: "none" }} onCanPlay={startCamera} />
+      <canvas ref={canvasRef} style={{ display: "none" }} />
     </Box>
   );
-}
+};  

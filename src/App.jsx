@@ -1,4 +1,3 @@
-// App.jsx
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Scene from "./components/scene/Scene.jsx";
@@ -6,7 +5,8 @@ import CustomizationContextProvider from "./context/CustomizationContex.jsx";
 import CustomizationInterface from "./components/CustomizationInterface.jsx";
 import MobileCustomizationInterface from "./components/MobileCustomizationInterface.jsx";
 import Media from "react-media";
-import OrderPage from './components/OrderPage'; // Zorg ervoor dat je deze component hebt
+import OrderPage from './components/OrderPage';
+import OrderConfirmation from './components/OrderConfirmation'; 
 
 function App() {
   return (
@@ -14,10 +14,8 @@ function App() {
       <Router>
         <div className="App">
           <Routes>
-            {/* Als de route /order is, laat de OrderPage zien */}
             <Route path="/order" element={<OrderPage />} />
-
-            {/* Als de route root ("/") is, laat de CustomizationInterface zien */}
+            <Route path="/order-confirmation" element={<OrderConfirmation />} />
             <Route
               path="/"
               element={
