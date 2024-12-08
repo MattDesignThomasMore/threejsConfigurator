@@ -3,13 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import './OrderPage.css';
 
 const OrderPage = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [shoeSize, setShoeSize] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(150);
   const [error, setError] = useState('');
   const shoePrice = 150;
   
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const calculateTotal = useCallback((qty) => {
     const total = shoePrice * qty;
@@ -19,6 +21,16 @@ const OrderPage = () => {
   useEffect(() => {
     calculateTotal(quantity);
   }, [quantity, calculateTotal]);
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+    setError('');
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    setError('');
+  };
 
   const handleSizeChange = (e) => {
     setShoeSize(e.target.value);
@@ -46,12 +58,21 @@ const OrderPage = () => {
   };
 
   const handleOrderSubmit = () => {
+    if (!name) {
+      setError('Please enter your name.');
+      return;
+    }
+
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+
     if (!shoeSize) {
       setError('Please select a shoe size before ordering.');
       return;
     }
 
-  
     navigate('/order-confirmation');
   };
 
@@ -67,12 +88,32 @@ const OrderPage = () => {
               className="shoe-image"
             />
           </h1>
-          <p className="order-subtitle">
-            Choose your size, select the quantity, and enjoy your customized shoes.
-          </p>
+      
         </header>
 
         <form className="order-form">
+          <div className="form-group">
+            <label htmlFor="name" className="form-label">Name:</label>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={handleNameChange}
+              className={`form-input ${error && !name ? 'error' : ''}`}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="email" className="form-label">Email:</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={handleEmailChange}
+              className={`form-input ${error && (!email || !/\S+@\S+\.\S+/.test(email)) ? 'error' : ''}`}
+            />
+          </div>
+
           <div className="form-group">
             <label htmlFor="size" className="form-label">Shoe size (EU):</label>
             <select
@@ -115,7 +156,8 @@ const OrderPage = () => {
             type="button"
             onClick={handleOrderSubmit}
             className="order-button"
-            disabled={!shoeSize || quantity < 1}
+            style={{ backgroundColor: "#26f158" }}
+            disabled={!name || !email || !shoeSize || quantity < 1}
           >
             Place Order
           </button>

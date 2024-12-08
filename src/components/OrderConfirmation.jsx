@@ -27,7 +27,7 @@ const OrderConfirmation = () => {
       <div className="confirmation-container">
         <div className={`checkmark ${isChecked ? 'checked' : ''}`}></div>
         <p className="thank-you-message">Thanks for ordering with us! Your order is on the way.</p>
-        <p className="order-id">Order ID: #{orderId}</p>
+        <p className="order-id">Order ID: #657c49d335c535818c8c7786</p>
         <button className="redirect-btn" style={{ marginTop: '30px' }} onClick={handleRedirect}>Go to Homepage</button>
       </div>
     </div>

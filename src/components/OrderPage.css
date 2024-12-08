@@ -30,10 +30,11 @@ body {
   border-radius: 20px;
   box-shadow: 0px 15px 50px rgba(0, 0, 0, 0.08); 
   padding: 50px 35px; 
-  width: 100%;
+  width: 150%;
   max-width: 900px; 
   backdrop-filter: blur(10px); 
   height: auto;
+  padding-bottom: 10vh;
 }
 
 
@@ -44,7 +45,7 @@ body {
 
 .order-header {
   text-align: left;
-  margin-bottom: 35px; 
+  margin-bottom: 15px; 
 }
 
 .order-title {
@@ -113,7 +114,7 @@ body {
 }
 
 .total-price {
-  padding-top: 5vh;
+  padding-top: -5vh;
   font-size: 24px; 
   font-weight: 700;
   color: #2c3e50;
@@ -260,6 +261,153 @@ body {
 
 .order-button:disabled {
   background-color: #bdc3c7; 
-  cursor: not-allowed;
+  cursor: not-allowed;/* Algemene body stijl */
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f6f9; 
+    color: #2c3e50;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: auto; 
+  }
+  
+  /* Algemene Wrapper */
+  .order-page-wrapper {
+    background-image: url('/img/img.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px; 
+  }
+  
+  /* Main Container voor formulier */
+  .order-container {
+    background-color: rgba(255, 255, 255, 0.9); 
+    border-radius: 12px;
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.08); 
+    padding: 30px 20px; /* Verlaagde padding voor compactheid */
+    width: 100%;
+    max-width: 500px; /* Kleinere max-width */
+    backdrop-filter: blur(8px); 
+    height: auto;
+    max-height: 400px; /* Verlaagde hoogte */
+  }
+  
+  .order-container:hover {
+    box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.12);
+  }
+  
+  /* Header Sectie */
+  .order-header {
+    text-align: left;
+    margin-bottom: 20px; 
+  }
+  
+  .order-title {
+    font-size: 28px; /* Kleinere font-size voor compacte look */
+    font-weight: 700; 
+    color: #2c3e50; 
+    margin-bottom: 8px; 
+  }
+  
+  .order-subtitle {
+    font-size: 14px; 
+    color: #7f8c8d;
+    font-weight: 400;
+    line-height: 1.5; 
+  }
+  
+  /* Formulier Container */
+  .order-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; 
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-label {
+    font-weight: 600;
+    font-size: 14px; 
+    color: #2c3e50;
+    margin-bottom: 8px; 
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 14px; 
+    border: 1px solid #d0d5db;
+    border-radius: 8px;
+    transition: border-color 0.2s ease;
+  }
+  
+  .form-input:focus {
+    border-color: #3498db;
+  }
+  
+  /* Button Styling */
+  .order-button {
+    padding: 10px;
+    font-size: 16px; 
+    background-color: #5acd75; 
+    color: white; 
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-transform: uppercase;
+    font-weight: 600;
+    width: 100%;
+  }
+  
+  .order-button:hover {
+    background-color: #3ebd65;
+  }
+  
+  /* Error Styling */
+  .error-message {
+    color: #e74c3c;
+    font-size: 12px;
+    text-align: center;
+    margin: 0 auto;
+  }
+  
+  /* Responsiviteit */
+  @media (max-width: 768px) {
+    .order-container {
+      padding: 20px 15px;
+      max-width: 100%;
+    }
+  
+    .order-title {
+      font-size: 24px; 
+    }
+  
+    .order-subtitle {
+      font-size: 12px; 
+    }
+  
+    .form-input {
+      font-size: 12px;
+    }
+  
+    .order-button {
+      font-size: 14px;
+      padding: 8px;
+    }
+  }
+  
   transform: translateY(0);
 }

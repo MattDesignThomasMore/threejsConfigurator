@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Scene from "./components/scene/Scene.jsx";
 import CustomizationContextProvider from "./context/CustomizationContex.jsx";
 import CustomizationInterface from "./components/CustomizationInterface.jsx";
-import MobileCustomizationInterface from "./components/MobileCustomizationInterface.jsx";
 import Media from "react-media";
 import OrderPage from './components/OrderPage';
 import OrderConfirmation from './components/OrderConfirmation'; 

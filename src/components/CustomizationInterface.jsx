@@ -223,4 +223,4 @@ Checkout
       <canvas ref={canvasRef} style={{ display: "none" }} />
     </Box>
   );
-};  
+}; 
